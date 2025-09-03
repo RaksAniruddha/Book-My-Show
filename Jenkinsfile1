@@ -1,4 +1,4 @@
-//(without K8S Stage)
+// without K8S Stage
 pipeline {
     agent any
     tools {
@@ -72,10 +72,15 @@ pipeline {
                         docker build --no-cache -t anirudev/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
 
                         echo "Pushing Docker image to registry..."
-                        docker push kastrov/bms:latest
+                        docker push anirudev/bms:latest
                         '''
                     }
                 }
+            }
+        }
+        stage('Trivy Image Scan') {
+            steps {
+                sh 'trivy image anirudev/bms:latest > trivyimage.txt'
             }
         }
         stage('Deploy to Container') {
