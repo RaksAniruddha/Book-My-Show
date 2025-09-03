@@ -54,9 +54,15 @@ pipeline {
         }
         stage('OWASP FS Scan') {
             steps {
-                 dependencyCheck additionalArguments: '--scan ./ --format XML --out dependency-check-report --disableYarnAudit --disableNodeAudit',
-                        odcInstallation: 'DP-Check'
-                    dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
+                  // Run OWASP Dependency-Check
+                dependencyCheck additionalArguments: '--scan ./ --format ALL --out dependency-check-report --disableYarnAudit --disableNodeAudit',
+                                odcInstallation: 'DP-Check'
+
+                // Debugging: verify reports exist
+                sh 'echo "--- Checking for reports ---" && ls -R dependency-check-report || true'
+
+                // Publish XML report
+                dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
             }
         }
         stage('Trivy FS Scan') {
