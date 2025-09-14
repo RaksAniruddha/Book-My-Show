@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: bms-container
-        image: anirudev/bms:latest 
+        image: kastro/bms:latest 
         ports:
         - containerPort: 3000  
