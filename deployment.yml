@@ -19,7 +19,3 @@ spec:
         image: anirudev/bms:latest 
         ports:
         - containerPort: 3000 
-=======
-        image: anirudev/bms:latest 
-        ports:
-        - containerPort: 3000  
